@@ -123,12 +123,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="About.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Food.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="HighScore.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="util.cpp" />
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Move.cpp" />
+    <ClCompile Include="SaveLoad.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="ThreadControl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
+    <ClInclude Include="About.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="Food.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Gate.h" />
+    <ClInclude Include="Header1.h" />
+    <ClInclude Include="HighScore.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Move.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="SaveLoad.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="Snake.h" />
+    <ClInclude Include="ThreadControl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
