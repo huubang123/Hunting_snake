@@ -244,6 +244,7 @@ void Draw(const char* str)
 // -------------------- Hiệu ứng chết --------------------
 void ProcessDeadAnimation()
 {
+    SetTextColor(SNAKE_COLOR);
     if (SOUND_ON) Beep(500, 120);
     for (int k = 0; k < 7; k++)
     {
