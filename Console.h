@@ -3,3 +3,4 @@
 
 void GotoXY(int x, int y);
 void ShowCursor(bool show);
+void SetColor(int color);
