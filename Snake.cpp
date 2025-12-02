@@ -272,6 +272,7 @@ void ProcessDead()
     printf("GAME OVER!");
 
     SaveHighScorePrompt();  // hỏi tên & lưu top 10
+    GO_BACK_MENU = 1;
 }
 
 // -------------------- Ăn mồi --------------------

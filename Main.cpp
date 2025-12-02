@@ -91,7 +91,7 @@
 //}
 
 
-#include "Header.h"
+#include "Header1.h"
 #include "Global.h"
 #include "Menu.h"
 #include "Game.h"
@@ -156,9 +156,7 @@ int main()
             STATE = 1;
         }
 
-        // HUD đơn giản
-        GotoXY(2, HEIGH_CONSOLE + 1); printf("Level: %d  Speed: %d  Score: %d", LEVEL, SPEED, SCORE);
-        GotoXY(2, HEIGH_CONSOLE + 2); printf("[P]Pause [Z]Save [X]Load [ESC]Menu");
+       
 
         char temp;
         while (STATE == 1)
@@ -193,8 +191,12 @@ int main()
                 }
             }
 
-            // cập nhật HUD
-            GotoXY(2, HEIGH_CONSOLE + 1); printf("Level: %d  Speed: %d  Score: %d    ", LEVEL, SPEED, SCORE);
+          
+        }
+        if (GO_BACK_MENU) {
+            GO_BACK_MENU = 0;
+            // quay lại menu ngay
+            continue;
         }
 
         GotoXY(0, HEIGH_CONSOLE + 3);

@@ -95,6 +95,7 @@ void SaveHighScorePrompt() {
     if ((int)v.size() > 10) v.resize(10);
 
     SaveAll(v);
+    GO_BACK_MENU = 1;
 
     GotoXY(5, 7);
     printf("Da luu ket qua! Diem: %d", SCORE);

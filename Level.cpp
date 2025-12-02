@@ -2,11 +2,28 @@
 #include "Global.h"
 #include "Console.h"
 
+// ===== Helper vẽ tường liền mạch =====
 static void AddObstacleLineH(int x1, int x2, int y) {
-    for (int x = x1; x <= x2; ++x) OBSTACLES.push_back({ x,y });
+    for (int x = x1; x <= x2; ++x) OBSTACLES.push_back({ x, y });
 }
 static void AddObstacleLineV(int x, int y1, int y2) {
-    for (int y = y1; y <= y2; ++y) OBSTACLES.push_back({ x,y });
+    for (int y = y1; y <= y2; ++y) OBSTACLES.push_back({ x, y });
+}
+
+// ===== Helper vẽ tường có "khoảng trống" (khe/door) =====
+static void AddObstacleLineHGap(int x1, int x2, int y, int gap_from, int gap_to) {
+    if (gap_from > gap_to) { int t = gap_from; gap_from = gap_to; gap_to = t; }
+    for (int x = x1; x <= x2; ++x) {
+        if (x >= gap_from && x <= gap_to) continue; // chừa khe
+        OBSTACLES.push_back({ x, y });
+    }
+}
+static void AddObstacleLineVGap(int x, int y1, int y2, int gap_from, int gap_to) {
+    if (gap_from > gap_to) { int t = gap_from; gap_from = gap_to; gap_to = t; }
+    for (int y = y1; y <= y2; ++y) {
+        if (y >= gap_from && y <= gap_to) continue; // chừa khe
+        OBSTACLES.push_back({ x, y });
+    }
 }
 
 bool IsObstacle(int x, int y) {
@@ -33,30 +50,34 @@ void SetLevel(int lv) {
     LEVEL = lv;
     ClearObstacles();
 
-    // Level 1: không vật cản bên trong 
     if (lv == 1) {
-       
+        // Level 1: không có vật cản bên trong
     }
-    // Level 2: vài tường ngang/dọc
     else if (lv == 2) {
-        AddObstacleLineH(10, 40, 6);
-        AddObstacleLineH(10, 40, 14);
-        AddObstacleLineV(10, 6, 14);
-        AddObstacleLineV(40, 6, 14);
+        // Level 2: khung trong nhưng có 4 cửa 
+        AddObstacleLineHGap(10, 40, 6, 24, 26); // top có cửa giữa
+        AddObstacleLineHGap(10, 40, 14, 24, 26); // bottom có cửa giữa
+        AddObstacleLineVGap(10, 6, 14, 9, 11); // left có cửa giữa
+        AddObstacleLineVGap(40, 6, 14, 9, 11); // right có cửa giữa
     }
-    // Level 3: mê cung nhỏ
     else if (lv == 3) {
-        AddObstacleLineH(8, 42, 5);
-        AddObstacleLineH(8, 42, 15);
-        AddObstacleLineV(8, 5, 15);
-        AddObstacleLineV(42, 5, 15);
-        AddObstacleLineH(15, 35, 10);
-        AddObstacleLineV(20, 7, 13);
-        AddObstacleLineV(30, 7, 13);
+        // Level 3: KHÔNG khung kín, KHÔNG tường giữa
+        // Tạo mê cung mở với nhiều khe hở:
+
+        // 3 hàng ngang rải rác, mỗi hàng đều có khe hở
+        AddObstacleLineHGap(10, 40, 6, 22, 28);  // hàng trên, hở ở giữa
+        // (bỏ HÀNG GIỮA hoàn toàn để không có vật cản giữa)
+        AddObstacleLineHGap(10, 40, 14, 33, 38);  // hàng dưới, hở lệch phải
+
+        // Một vài cột dọc rời, mỗi cột đều có khe để băng qua
+        AddObstacleLineVGap(16, 6, 14, 9, 11);    // cột trái, hở giữa
+        AddObstacleLineVGap(28, 6, 14, 6, 8);     // cột giữa-trái, hở gần trên
+        AddObstacleLineVGap(36, 6, 14, 12, 14);   // cột phải, hở gần dưới
+
     }
-    // Level 4: giống LV3 + object di chuyển
     else if (lv == 4) {
-        SetLevel(3); // kế thừa vật cản LV3
+        // Level 4: dựa trên Level 3 + object di chuyển
+        SetLevel(3); // kế thừa vật cản LV3 (đã mở)
         LEVEL = 4;
         InitMovingObjectIfNeeded();
     }
@@ -68,15 +89,13 @@ void InitMovingObjectIfNeeded() {
     for (int tries = 0; tries < 1000; ++tries) {
         int x = rand() % (WIDTH_CONSOLE - 2) + 1;
         int y = rand() % (HEIGH_CONSOLE - 2) + 1;
-        bool clash = false;
-        if (IsObstacle(x, y)) clash = true;
-        if (!clash) {
-            MOV_OBJ = { x,y };
+        if (!IsObstacle(x, y)) {
+            MOV_OBJ = { x, y };
             MOV_DX = 1; MOV_DY = 1;
             return;
         }
     }
-    MOV_OBJ = { 0,0 };
+    MOV_OBJ = { 0, 0 };
 }
 
 void UpdateMovingObject() {
@@ -88,9 +107,9 @@ void UpdateMovingObject() {
     int nx = MOV_OBJ.x + MOV_DX;
     int ny = MOV_OBJ.y + MOV_DY;
 
-    // bật tường
-    if (nx <= 1 || nx >= WIDTH_CONSOLE - 1) MOV_DX = -MOV_DX;
-    if (ny <= 1 || ny >= HEIGH_CONSOLE - 1) MOV_DY = -MOV_DY;
+    // bật tường ngoài
+    if (nx <= 1 || nx >= WIDTH_CONSOLE - 1)  MOV_DX = -MOV_DX;
+    if (ny <= 1 || ny >= HEIGH_CONSOLE - 1)  MOV_DY = -MOV_DY;
 
     nx = MOV_OBJ.x + MOV_DX;
     ny = MOV_OBJ.y + MOV_DY;

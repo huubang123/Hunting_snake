@@ -50,6 +50,17 @@
 #include "ThreadControl.h"
 #include "Level.h"
 
+static void DrawHUD() {
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), COL_DEFAULT);
+
+    GotoXY(2, HEIGH_CONSOLE + 1);
+    printf("Level: %d  Speed: %d  Score: %d    ", LEVEL, SPEED, SCORE);
+
+    GotoXY(2, HEIGH_CONSOLE + 2);
+    printf("[P]Pause [Z]Save [X]Load [ESC]Menu      ");
+}
+
 void ThreadFunc()
 {
     while (1)
@@ -68,7 +79,7 @@ void ThreadFunc()
             case 'S': MoveDown(); break;
             }
             if (STATE == 1) Draw("O");
-
+            DrawHUD();
             Sleep(1000 / SPEED);
         }
     }
@@ -91,6 +102,6 @@ void StartGame()
     SetLevel(LEVEL);
     ResetData(DEFAULT_SNAKE_LENGTH);
     DrawLevel();
-
+    DrawHUD();
     STATE = 1;
 }

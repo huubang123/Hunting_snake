@@ -55,3 +55,6 @@ int SCORE = 0;
 int FOODS_EATEN_IN_LEVEL = 0;
 int SOUND_ON = 1;
 int SNAKE_COLOR = COL_GREEN;
+
+
+int GO_BACK_MENU = 0;

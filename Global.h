@@ -82,3 +82,6 @@ extern int SCORE;
 extern int FOODS_EATEN_IN_LEVEL;   
 extern int SOUND_ON;                
 extern int SNAKE_COLOR;            
+
+
+extern int GO_BACK_MENU;
