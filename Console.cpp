@@ -14,3 +14,8 @@ void ShowCursor(bool show)
     CONSOLE_CURSOR_INFO info = { 1, show };
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 }
+
+void SetColor(int color)
+{
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
