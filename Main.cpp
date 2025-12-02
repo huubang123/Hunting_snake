@@ -90,7 +90,6 @@
 //    return 0;
 //}
 
-
 #include "Header1.h"
 #include "Global.h"
 #include "Menu.h"
@@ -156,7 +155,9 @@ int main()
             STATE = 1;
         }
 
-       
+        // HUD đơn giản
+        GotoXY(2, HEIGH_CONSOLE + 1); printf("Level: %d  Speed: %d  Score: %d", LEVEL, SPEED, SCORE);
+        GotoXY(2, HEIGH_CONSOLE + 2); printf("[P]Pause [Z]Save [ESC]Menu");
 
         char temp;
         while (STATE == 1)
@@ -165,12 +166,7 @@ int main()
 
             if (temp == 'P') PauseGame(handle_t1);
             else if (temp == 'Z') SaveGame();
-            else if (temp == 'X')
-            {
-                PauseGame(handle_t1);
-                LoadGame();
-                ResumeThread(handle_t1);
-            }
+
             else if (temp == 27)
             {
                 ExitGame(handle_t1);
@@ -191,12 +187,9 @@ int main()
                 }
             }
 
-          
-        }
-        if (GO_BACK_MENU) {
-            GO_BACK_MENU = 0;
-            // quay lại menu ngay
-            continue;
+            // cập nhật HUD
+            GotoXY(2, HEIGH_CONSOLE + 1); printf("Level: %d  Speed: %d  Score: %d", LEVEL, SPEED, SCORE);
+            GotoXY(2, HEIGH_CONSOLE + 2); printf("[P]Pause [Z]Save [ESC]Menu");
         }
 
         GotoXY(0, HEIGH_CONSOLE + 3);
